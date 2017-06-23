@@ -1,8 +1,8 @@
 <?php
-class IndexController extends BaseController
+class BaseController extends \Phalcon\Mvc\Controller
 {
 	
-	public function indexAction()
+	public function initialize()
 	{
 		$this->assets->addCss('css/bootstrap.min.css');
 		$this->assets->addJs('css/jquery.min.js');

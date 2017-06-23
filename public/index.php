@@ -18,6 +18,16 @@ try
 		return $view;
 	});
 
+	//db config
+	$di->set('db', function(){
+		return new \Phalcon\Db\Adapter\Pdo\Mysql([
+			'host' => 'localhost',
+			'username' => 'root',
+			'password' => '',
+			'dbname' => 'phalcon-db',
+		]);		
+	});	
+
 	//Deploy the app
 	$app = new \Phalcon\Mvc\Application($di);
 	echo $app->handle()->getContent();
