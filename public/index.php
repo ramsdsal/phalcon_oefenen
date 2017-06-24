@@ -44,6 +44,7 @@ try
         return $session;
     });
 
+    
 	//Deploy the app
 	$app = new \Phalcon\Mvc\Application($di);
 	echo $app->handle()->getContent();

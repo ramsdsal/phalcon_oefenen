@@ -4,9 +4,9 @@ class WorkshopController extends BaseController
 	
 	public function indexAction()
 	{
-		$conditions = ['deleted'=>NULL, 'd'=>1];
 		$this->view->setVars([
 			'workshops' => Workshop::find([
+				'conditions' => 'deleted is NULL',
 				'order' => 'created_at DESC'
 			])
 		]);
@@ -26,10 +26,16 @@ class WorkshopController extends BaseController
 		$work->name = $request['name'];
 		$work->location = $request['location'];
 		$work->students = $request['students'];		
-		$work->save();
+		$status = $work->save();
+
+		if(!$status){
+			$this->flash->error('Helaas kunnen we de workshop niet creeren, probeer nog een keer later...');
+			return $this->response->redirect('workshop');
+		}
 
 		$this->flash->success('De workshop is met success gecreeerd!');
 		return $this->response->redirect('workshop');	
+		
 
 	}
 
@@ -37,5 +43,28 @@ class WorkshopController extends BaseController
 	{
 		$workshop = $this->request->getPost();
 		print_r($workshop);
+	}
+
+	public function deleteAction($id)
+	{
+		$wr = Workshop::find($id);
+		if(!$wr){
+			$this->flash->error('Er is geen workshop met die naam...');
+			return $this->response->redirect('workshop');
+		}
+
+		$wr->delete();
+
+		$this->flash->success('Workshop is verwijdeerd..');
+		return $this->response->redirect('workshop');
+	}
+
+	public function showAction($id){
+		
+		$wr = Workshop::findFirst($id);
+
+		$this->view->setVars([
+			'workshop' => $wr			
+		]);
 	}
 }
