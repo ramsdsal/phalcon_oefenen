@@ -39,10 +39,17 @@ class WorkshopController extends BaseController
 
 	}
 
-	public function createStudent()
+	public function createStudentAction($id)
 	{
-		$workshop = $this->request->getPost();
-		print_r($workshop);
+		$st = $this->request->getPost();
+		$wr = Workshop::findFirst($id);
+		$per = new Student();
+		$per->name = $st['name'];
+		$per->workshop = $wr;
+		$per->save();
+
+		$this->flash->success('Deelnemer is toegevoegd met success..');
+		return $this->response->redirect('workshop/show/'.$id);		
 	}
 
 	public function deleteAction($id)

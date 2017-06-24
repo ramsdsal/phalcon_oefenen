@@ -1,42 +1,64 @@
 <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover" border="1px solid black">
+        	<p><?php $this->flash->output() ?></p>
+            <table class="table table-hover">
 
                 <thead>
                     <tr>
                         <th>Deelnemers</th>                        
-                        <th> </th>
+                        <th>        	
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>                        
-                            <div class="media-body">
-                                <h4 class="media-heading">sddfdf</h4>
-                            </div>
-                        </div></td>                        
-                        <td>
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span> Remove
-                        </button></td>
-                    </tr>                    
+                <?php if(count($workshop->student)>0): ?>
+                    <?php foreach($workshop->student as $st): ?>
+	                    <tr>
+	                        <td>                        
+	                            <div class="media-body">
+	                                <h4 class="media-heading"><?= $st->name ?></h4>
+	                        	</div>
+	                        </td>                        
+	                        <td>
+		                        <a type="button" class="btn btn-danger" href="../../student/delete/<?=$st->id?>">
+		                            <span class="glyphicon glyphicon-remove"></span> Verwijderen
+		                        </a>
+	                        </td>
+	                    </tr> 
+                	<?php endforeach; ?>
+                <?php else: ?>
+                	<tr>
+	                        <td>                        
+	                            <div class="media-body">
+	                                <h4 class="media-heading">Er is geen deelnemers geregistreerd!</h4>
+	                        	</div>
+	                        </td>                        
+	                        <td>
+		                        
+	                        </td>
+	                    </tr> 
+                <?php endif; ?>  
                 </tbody>
                 <tfoot>
                     <tr>                      
-                        <td><h5>Workshop Naam<br>Locatie<br>Deelnemers</h5><h3>Vrije plaats</h3></td>
-                        <td class="text-right"><h5><strong><?=$workshop->name?><br><?=$workshop->location?><br><?=$workshop->students?></strong></h5><h3><?=$workshop->students - count($workshop->student)?></h3></td>
-                    </tr>
-                    <tr>                        
-                        <td>
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                        </button></td>
-                        <td>
-                        <button type="button" class="btn btn-success">
-                            Checkout <span class="glyphicon glyphicon-play"></span>
-                        </button></td>
+                        <td class="pull-right"><h5>Workshop Naam<br>Locatie<br>Maximum plaats</h5><h3>Vrije plaats</h3></td>
+                        <td class="text-left"><h5><strong><?=$workshop->name?><br><?=$workshop->location?><br><?=$workshop->students?></strong></h5><h3><?=$workshop->students - count($workshop->student)?></h3></td>
+                    </tr>                       
+                    <tr> 
+                    <form method="post" action="../createStudent/<?=$workshop->id?>">
+                        <td><input type="text" name="name" class="form-control"></td>
+                        <td> 
+                        	
+	                    		<button type="submit" class="btn btn-success" 
+	                    		<?php if(($workshop->students - count($workshop->student) <= 0)) echo 'disabled="disabled"' ?>
+	                    		>
+	                            Add nieuw <span class="glyphicon glyphicon-plus"></span>
+	                        	</button> 
+	                                     
+                        </td>
+                    </form>
                     </tr>
                 </tfoot>
             </table>
         </div>
-    </div>
+</div>
