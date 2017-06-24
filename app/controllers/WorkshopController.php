@@ -4,22 +4,38 @@ class WorkshopController extends BaseController
 	
 	public function indexAction()
 	{
+		$conditions = ['deleted'=>NULL, 'd'=>1];
 		$this->view->setVars([
-			'workshops' => Workshop::find()
+			'workshops' => Workshop::find([
+				'order' => 'created_at DESC'
+			])
 		]);
 
 	}
 
 	public function createAction()
-	{
+	{		
+		$request = $this->request->getPost();		
+		
+		if($request['name']=="" || $request['location']=="" || $request['students']==""){			
+			$this->flash->error('De velden zijn verplichten');
+			return $this->response->redirect('workshop');
+		}
+
 		$work = new Workshop();
+		$work->name = $request['name'];
+		$work->location = $request['location'];
+		$work->students = $request['students'];		
+		$work->save();
 
-		$work->name = "Como programar";
-		$work->location = "ROtterdam";
-		$work->students = 5;
-		$result = $work->create();
-		if(!$result)
-			print_r($work->getMessages());
+		$this->flash->success('De workshop is met success gecreeerd!');
+		return $this->response->redirect('workshop');	
 
+	}
+
+	public function createStudent()
+	{
+		$workshop = $this->request->getPost();
+		print_r($workshop);
 	}
 }

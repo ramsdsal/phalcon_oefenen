@@ -27,6 +27,22 @@ try
 			'dbname' => 'phalcon-db',
 		]);		
 	});	
+	//flash messages
+	$di->set('flash', function () {
+        return new Phalcon\Flash\Session([
+            'error'   => 'alert alert-danger',
+            'success' => 'alert alert-success',
+            'notice'  => 'alert alert-info',
+            'warning' => 'alert alert-warning',
+        ]);
+    });    
+
+	//Session
+    $di->setShared('session', function () {
+        $session = new Phalcon\Session\Adapter\Files();
+        $session->start();
+        return $session;
+    });
 
 	//Deploy the app
 	$app = new \Phalcon\Mvc\Application($di);
