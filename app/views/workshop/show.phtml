@@ -1,6 +1,7 @@
 <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
         	<p><?php $this->flash->output() ?></p>
+        	<h1 class="pull-right"><?=$workshop->name?></h1>
             <table class="table table-hover">
 
                 <thead>
@@ -42,7 +43,7 @@
                 <tfoot>
                     <tr>                      
                         <td class="pull-right"><h5>Workshop Naam<br>Locatie<br>Maximum plaats</h5><h3>Vrije plaats</h3></td>
-                        <td class="text-left"><h5><strong><?=$workshop->name?><br><?=$workshop->location?><br><?=$workshop->students?></strong></h5><h3><?=$workshop->students - count($workshop->student)?></h3></td>
+                        <td class="text-left"><h5><strong><?=$workshop->name?><br><?=$workshop->location?><br><?=$workshop->students?></strong></h5><h3><?=$workshop->students - $workshop->getNumPeople()?></h3></td>
                     </tr>                       
                     <tr> 
                     <form method="post" action="../createStudent/<?=$workshop->id?>">
@@ -50,13 +51,18 @@
                         <td> 
                         	
 	                    		<button type="submit" class="btn btn-success" 
-	                    		<?php if(($workshop->students - count($workshop->student) <= 0)) echo 'disabled="disabled"' ?>
+	                    		<?php if(($workshop->students - $workshop->getNumPeople()) <= 0) echo 'disabled="disabled"'; ?>
 	                    		>
 	                            Add nieuw <span class="glyphicon glyphicon-plus"></span>
 	                        	</button> 
-	                                     
                         </td>
                     </form>
+                    </tr>
+                    <tr>                      
+                        <td>
+                        	<a type="button" class="btn btn-default" href="../../workshop"><span class="glyphicon glyphicon-chevron-left"></span>Ga terug</a>
+                        </td>
+                        <td>&nbsp;</td>
                     </tr>
                 </tfoot>
             </table>

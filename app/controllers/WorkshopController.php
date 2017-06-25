@@ -66,12 +66,43 @@ class WorkshopController extends BaseController
 		return $this->response->redirect('workshop');
 	}
 
-	public function showAction($id){
+	public function showAction($id)
+	{
 		
 		$wr = Workshop::findFirst($id);
 
 		$this->view->setVars([
 			'workshop' => $wr			
 		]);
+	}
+
+	public function editAction($id)
+	{
+		$wr = Workshop::findFirst($id);
+
+		$this->view->setVars([
+			'workshop' => $wr			
+		]);
+	}
+
+	public function updateAction($id)
+	{
+		$request = $this->request->getPost();
+		$wr = Workshop::findFirst($id);
+		
+		if(!$wr->canBeUpdated($request['students']))
+		{
+			$this->flash->error('De workshop kan niet worden bijgewerkt, omdat het aantal plaatsen niet kleiner kunnen worden dan aantal plaatsen die al geregistreerd zijn.');
+			return $this->response->redirect('workshop/edit/'.$id);
+		}
+
+		$wr->name = $request['name']; 
+		$wr->location = $request['location'];
+		$wr->students = $request['students'];
+		$wr->save();
+
+		$this->flash->success('De workshop is bijgewerkt.');
+			return $this->response->redirect('workshop');
+		
 	}
 }

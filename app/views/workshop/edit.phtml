@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-6">
+		<div class="pull-right">
+		<?php $this->flash->output() ?>
+		<h1><?= $workshop->name ?></h1>			
+		</div>
+	</div>
+	<div class="col-xs-2"></div>
+</div>
+<div class="row">
+	<div class="col-xs-2"></div>	
+	<div class="col-xs-6">	
+		<form method="post" action="../../workshop/update/<?= $workshop->id?>">
+		  <div class="form-group">
+		    <label for="name">Workshop naam</label>
+		    <input type="text" class="form-control" id="name" name="name" placeholder="Workshop naam" value="<?= $workshop->name?>">
+		  </div>
+		  <div class="form-group">
+		    <label for="location">Locatie</label>
+		    	<select class="form-control" id="location" name="location">	  
+				  <option value="Rotterdam" <?= ($workshop->location == 'Rotterdam') ? 'selected' : ''; ?>>Rotterdam</option>
+				  <option value="Amsterdam" <?= ($workshop->location == 'Amsterdam') ? 'selected' : ''; ?>>Amsterdam</option>				  
+				  <option value="Utrecht" <?= ($workshop->location == 'Utrecht') ? 'selected' : ''; ?>>Utrecht</option>
+				  <option value="Breda" <?= ($workshop->location == 'Breda') ? 'selected' : ''; ?>>Breda</option>
+				</select>
+		  </div> 
+		  <div class="form-group">
+		    <label for="students">Aantal Deelnemers</label>
+		    <select class="form-control" name="students">
+			  <option value="1" <?= ($workshop->students == 1) ? 'selected' : ''; ?>>1</option>
+			  <option value="2" <?= ($workshop->students == 2) ? 'selected' : ''; ?>>2</option>
+			  <option value="3" <?= ($workshop->students == 3) ? 'selected' : ''; ?>>3</option>
+			  <option value="4" <?= ($workshop->students == 4) ? 'selected' : ''; ?>>4</option>
+			  <option value="5" <?= ($workshop->students == 5) ? 'selected' : ''; ?>>5</option>
+			</select>
+		  </div>
+		  Er zijn al <b><?= $workshop->getNumPeople() ?></b> mens(en) al ingeschreven.
+		  <button type="submit" class="btn pull-right btn-primary">Update</button>
+		</form>
+	</div>
+	<div class="col-xs-2"></div>
+</div>
+<div class="row">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-2">
+		<a type="button" href="../../workshop" class="btn pull-left btn-default">Ga terug</a>
+	</div>
+	<div class="col-xs-2"></div>
+</div>

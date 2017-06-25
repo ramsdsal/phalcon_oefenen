@@ -7,7 +7,7 @@
 		<form method="post" action="workshop/create">
 		  <div class="form-group">
 		    <label for="name">Workshop naam</label>
-		    <input type="text" class="form-control" id="name" name="name" placeholder="Workshop naam">
+		    <input type="text" class="form-control" id="name" name="name" placeholder="Workshop naam" required="required">
 		  </div>
 		  <div class="form-group">
 		    <label for="location">Locatie</label>
@@ -19,16 +19,23 @@
 				</select>
 		  </div> 
 		  <div class="form-group">
-		    <label for="students">Aantal Deelnemers</label>
-		    <input type="text" class="form-control" id="students" placeholder="Maximum Aantal Deelnemers" name="students">
+		    <label for="students">Aantal Deelnemers</label>		    
+		    <select class="form-control" name="students">
+			  <option value="1">1</option>
+			  <option value="2">2</option>
+			  <option value="3">3</option>
+			  <option value="4">4</option>
+			  <option value="5">5</option>
+			</select>
 		  </div> 
-		  <button type="submit" class="btn btn-default pull-right btn-primary">Creeren</button>
+		  <button type="submit" class="btn pull-right btn-primary">Creeren</button>
 		</form>
 	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12">
 	<h1>Workshops lijst</h1>
+	<?php if(count($workshops)>0): ?>
 		<table class="table"> 
 			<thead>	
 				<tr> 
@@ -60,9 +67,12 @@
 							  </ul>
 							</div>
 						</td>
-					</tr> 
+					</tr> 				
 				<?php endforeach; ?> 
 			</tbody>
 		</table>
+	<?php else: ?>
+		<p>Er is geen workshop gevonden ... </p>
+	<?php endif; ?>
 	</div>
 </div>

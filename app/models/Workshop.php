@@ -23,4 +23,15 @@ class Workshop extends \Phalcon\Mvc\Model
 	public function beforeUpdate(){
 		$this->updated_at = date('Y-m-d H:i:s');
 	}
+
+	public function canBeUpdated($new)
+	{
+		if(count($this->student) > $new)
+			return false;
+		return true;
+	}
+	public function getNumPeople()
+	{
+		return count($this->student);
+	}
 }
